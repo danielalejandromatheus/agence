@@ -53,7 +53,7 @@ class UserController extends Controller
             return $month->merge($intersect);
         });
         if($invoices->count()>0){
-            $median = $invoices->sum(fn($invoice)=> $invoice->median('set_cost'))/$invoices->count();
+            $median = $invoices->sum(fn($invoice)=> $invoice->sum('set_cost')/$invoice->count())/$invoices->count();
             $invoices = $invoices->map(fn($i)=> $i->map(fn($i)=>$i['net_earnings']));
             $invoices->put('set_cost_median', $median);
         }else{
