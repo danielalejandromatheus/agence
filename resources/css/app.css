@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.max-h-fit-screen {
+  max-height: calc(100vh - 375px);
+}
+.h-fit-screen {
+  height: calc(100vh - 375px);
+}
