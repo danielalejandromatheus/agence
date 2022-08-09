@@ -64,6 +64,7 @@ window.axios
       label: 'Media costo fijo',
       type: 'line',
       backgroundColor: '#FF5733',
+      borderColor: '#FF5733',
       order: 1,
       data: Object.keys(data).map((i) => data.set_cost_median)
     }
