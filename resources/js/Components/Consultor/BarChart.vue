@@ -40,7 +40,36 @@ const months = ref(null)
 const loaded = ref(false)
 const chartOptions = {
   responsive: true,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  plugins: {
+    tooltip: {
+      enabled: true,
+      callbacks: {
+        label: (tooltipItems, data) => {
+          console.log(tooltipItems)
+          return `R$ ${Number(tooltipItems.raw).toLocaleString('pt-BR')}`
+        }
+      }
+    },
+    title: {
+      display: true,
+      text: 'Gráfica de ganancia neta(barra)'
+    }
+  },
+  hover: {
+    mode: 'index',
+    intersec: false
+  },
+
+  scales: {
+    y: {
+      ticks: {
+        callback: (value, index, values) => {
+          return `R$${Number(value).toLocaleString('pt-BR')}`
+        }
+      }
+    }
+  }
 }
 window.axios
   .get('/netEarningsBar', { params: { q: btoa(JSON.stringify(props.query)) } })
@@ -53,6 +82,7 @@ window.axios
       label: i,
       data: [],
       type: 'bar',
+
       backgroundColor: getRandomColor()
     }))
     for (const month of sorted) {

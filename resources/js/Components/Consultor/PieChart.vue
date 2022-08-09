@@ -30,9 +30,29 @@ const props = defineProps({
   query: Array
 })
 const earnings = ref(null)
+
 const chartOptions = {
   responsive: true,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  plugins: {
+    tooltip: {
+      enabled: true,
+      callbacks: {
+        label: (tooltipItems, data) => {
+          console.log(tooltipItems)
+          return `R$ ${Number(tooltipItems.raw).toLocaleString('pt-BR')}`
+        }
+      }
+    },
+    title: {
+      display: true,
+      text: 'Gráfica de ganancia neta(pizza)'
+    }
+  },
+  hover: {
+    mode: 'index',
+    intersec: false
+  }
 }
 const loaded = ref(false)
 window.axios
@@ -51,7 +71,7 @@ window.axios
     earnings.value = {
       labels: labels,
       datasets: [dataset],
-      type: 'pie    '
+      type: 'pie'
     }
     loaded.value = true
   })
